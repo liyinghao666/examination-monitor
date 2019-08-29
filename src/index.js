@@ -1,7 +1,7 @@
 import { Webcam } from './helper/webcam.js'
 import e from './helper/!.js'
 // 人体姿态识别
-import './builds/poseDetect.js'
+import './libs/poseDetect.js'
 let poseDetect = null
 if (window.Monitor && window.Monitor.poseDetect){ 
   poseDetect = window.Monitor.poseDetect
@@ -29,7 +29,10 @@ if (window.Monitor && window.Monitor.issueDetector){
 
 // 活体检测-摇头
 import shakeHead from './actions/shakeHead.js'
-
+// 活体检测-张嘴
+import openMouth from './actions/openMouth.js'
+// 活体检测-举起左手
+import raiseLeft from './actions/raiseLeft.js'
 // 视线检测
 // import webgazer from './eyeTracing.js'
 
@@ -81,17 +84,15 @@ export default class monitor {
       console.log('人脸识别模型加载完毕')
 
       // 姿态识别 加载模型
-      await poseDetect.init(this.video)
-      console.log('姿态识别模型加载完毕')
+      // await poseDetect.init(this.video)
+      // console.log('姿态识别模型加载完毕')
 
       // yolo算法 加载模型
-      // await issueDetector.init(this.webcam)
-      // console.log('yolo算法模型加载完毕')
+      await issueDetector.init(this.webcam)
+      console.log('yolo算法模型加载完毕')
 
       console.log('模型数据加载完成')
 
-      // yolo算法 加载模型
-      // this.model = await downloadModel()
       loaded = true
     }
   })()
@@ -100,24 +101,22 @@ export default class monitor {
   start = async () => {
     await this.init()
     console.log('监考开始')
-    // faceTracker(this.video, this.callback)
-    this.tick = setInterval(async () => {
+    this.tick = () => setTimeout(async () => {
       // yolo算法 进行中
-      // await faceDetect(this.webcam, this.model, this.callback)
+      await issueDetector.detect(this.webcam)
       
       // 姿态检测 进行中
-      let pose = await poseDetect.detect()
-      console.log(pose)
+      await poseDetect.detect()
       
       // 视线检测 进行中
       // await webgazer.detect(this.callback)
       
       // 人脸搜索
-      let face = await faceSeeker.seek()
+      await faceSeeker.seek()
 
-      // 人脸识别 识别中
-      // rec(me, this.video)
-    }, 500);
+      this.tick()
+    }, 0);
+    this.tick()
   }
 
   // 考前的活体检测流程
@@ -129,12 +128,18 @@ export default class monitor {
     console.log('开始下载模型')
     await this.init()
     console.log('模型下载完成')
-    console.log('开始摇头检测')
-    await shakeHead()
-    console.log('摇头检测完成')
-    callback(0)
-    callback(1)
-    callback(2)
+    // console.log('开始摇头检测')
+    // await shakeHead()
+    // console.log('摇头检测完成')
+    // callback(0)
+    // console.log('开始张嘴检测')
+    // await openMouth()
+    // console.log('张嘴检测完成')
+    // callback(1)
+    // console.log('开始动作检测')
+    // await raiseLeft()
+    // console.log('动作检测完成')
+    // callback(2)
   }
   
   login = async (id, pic, password) => {
@@ -154,4 +159,6 @@ export default class monitor {
       }, 1000 * index)
     })
   }
+
+  pause = (time) => new Promise(res => setTimeout(res, time * 1000))
 }

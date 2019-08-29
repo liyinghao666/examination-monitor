@@ -1,4 +1,4 @@
-import monitor from './index.js'
+import monitor from './index'
 const video = document.querySelector('#video')
 const video2 = document.querySelector('#face')
 if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
