@@ -1,0 +1,17 @@
+{
+  "name": "examination-monitor",
+  "version": "1.0.0",
+  "main": "./src/index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.0.0-0",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/plugin-transform-runtime": "^7.5.5",
+    "@babel/runtime": "^7.5.5"
+  },
+  "dependencies": {
+    "@tensorflow/tfjs": "^0.13",
+    "face-api.js": "^0.20.1",
+    "tfjs-yolo-tiny": "^1.0.1"
+  }
+}
