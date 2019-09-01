@@ -1,5 +1,8 @@
 import { Webcam } from './helper/webcam.js'
 import e from './helper/!.js'
+// let worker = null
+let end = false
+
 // 人体姿态识别
 import './libs/poseDetect.js'
 let poseDetect = null
@@ -27,10 +30,10 @@ if (window.Monitor && window.Monitor.issueDetector){
   new Error('没有找到issueDector模块')
 }
 
-// 活体检测-摇头
-import shakeHead from './actions/shakeHead.js'
 // 活体检测-张嘴
 import openMouth from './actions/openMouth.js'
+// 活体检测-摇头
+import shakeHead from './actions/shakeHead.js'
 // 活体检测-举起左手
 import raiseLeft from './actions/raiseLeft.js'
 // 视线检测
@@ -40,6 +43,10 @@ import raiseLeft from './actions/raiseLeft.js'
 // 人脸识别 识别代码
 export default class monitor {
   constructor(video, video2, callback) {
+    // if (window.Worker) {
+    //   worker = new Worker('./worker.js')
+    //   window.worker = worker
+    // }    
     // monitor init
     this.video = video2
     this.video.style.position = "fixed"
@@ -73,25 +80,24 @@ export default class monitor {
 
   // 模型的准备 单例模式
   init = (() => {
+    Monitor.shakalaka = [0,0,0,0]
+
     let loaded = false
     return async () => {
       if (loaded)return
 
-      console.log('在 Monitor 的 init 方法中加载模型数据')
 
       // 人脸识别 加载模型
       await faceSeeker.init(this.video)
       console.log('人脸识别模型加载完毕')
 
       // 姿态识别 加载模型
-      // await poseDetect.init(this.video)
-      // console.log('姿态识别模型加载完毕')
+      await poseDetect.init(this.video)
+      console.log('姿态识别模型加载完毕')
 
       // yolo算法 加载模型
       await issueDetector.init(this.webcam)
       console.log('yolo算法模型加载完毕')
-
-      console.log('模型数据加载完成')
 
       loaded = true
     }
@@ -99,23 +105,29 @@ export default class monitor {
 
   // 一般的监考流程
   start = async () => {
+    let index = 0
     await this.init()
     console.log('监考开始')
     this.tick = () => setTimeout(async () => {
-      // yolo算法 进行中
-      await issueDetector.detect(this.webcam)
-      
-      // 姿态检测 进行中
-      await poseDetect.detect()
-      
-      // 视线检测 进行中
-      // await webgazer.detect(this.callback)
-      
-      // 人脸搜索
-      await faceSeeker.seek()
-
+      switch (index) {
+        case 0:
+          await issueDetector.detect(this.webcam)
+          index += 1
+          break
+        case 1:
+          await poseDetect.detect()
+          index += 1
+          break
+        case 2:
+          await faceSeeker.seek()
+          index = 0
+          break
+      }
+      if (end) {
+        return
+      }
       this.tick()
-    }, 0);
+    }, 300);
     this.tick()
   }
 
@@ -128,18 +140,13 @@ export default class monitor {
     console.log('开始下载模型')
     await this.init()
     console.log('模型下载完成')
-    // console.log('开始摇头检测')
-    // await shakeHead()
-    // console.log('摇头检测完成')
-    // callback(0)
-    // console.log('开始张嘴检测')
-    // await openMouth()
-    // console.log('张嘴检测完成')
-    // callback(1)
-    // console.log('开始动作检测')
-    // await raiseLeft()
-    // console.log('动作检测完成')
-    // callback(2)
+    callback(0)
+    await openMouth(callback)
+    callback(2)
+    await shakeHead(callback)
+    callback(4)
+    await raiseLeft(callback)
+    callback(6)
   }
   
   login = async (id, pic, password) => {
@@ -147,7 +154,8 @@ export default class monitor {
   }
 
   end = async () => {
-    clearInterval(this.tick);
+    // worker ? worker.terminate() : null
+    end = true
     return this.record
     // webgazer.end();
   }
@@ -162,3 +170,5 @@ export default class monitor {
 
   pause = (time) => new Promise(res => setTimeout(res, time * 1000))
 }
+
+window.monitor = monitor

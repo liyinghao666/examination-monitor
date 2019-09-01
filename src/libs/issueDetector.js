@@ -1,10 +1,11 @@
 import yolo, { downloadModel } from 'tfjs-yolo-tiny'
-import { Webcam } from '../helper/webcam.js'
 import e from '../helper/!.js'
 let model = null
-let shakalaka = [0, 0, 0]
+
 const detect = async (webcam) => {
-  let boxes = await yolo(webcam.capture(), model)
+  let boxes = await yolo(webcam.capture(), model, {
+    classProbThreshold: 0.5
+  })
   let issue = new Set()                  // 违规物品名称表
   let muti = 0
   let cheat = false
@@ -17,23 +18,36 @@ const detect = async (webcam) => {
       muti += 1
     }
   })
-  if (muti > 1) {
-    shakalaka.push(1)
-    shakalaka.shift()
-  }
-  // 多人同屏预判
-  if (shakalaka[0] === 1 && shakalaka[1] === 1 && shakalaka[2] === 1){
+  if (muti === 0) {
+    let boxes = await yolo(webcam.capture(), model, {
+      classProbThreshold: 0.2
+    })
+    boxes.forEach(box => {
+      if(box.className === 'person') {
+        muti += 1
+      }
+    })
+    if (muti === 0) {
+      Monitor.shakalaka.push(1)
+      Monitor.shakalaka.shift()   
+    }
+  } else if (muti === 1) {
+    Monitor.shakalaka.push(0)
+    Monitor.shakalaka.shift() 
+  } else if (muti > 1) {
+    Monitor.shakalaka.push(0)
+    Monitor.shakalaka.shift() 
     e(1,101)
   }
 
   // 杂物预判
   if (cheat) {
-    e(1,103)
+    e(1,103,Array.from(issue).join(','))
   }
 }
 
 const init = async () => {
-  model = await downloadModel()
+  model = await downloadModel('/models/model.json')
 }
 
 const issueDetector = {

@@ -14,7 +14,7 @@ const table = {
   205: '换人'
 }
 
-export default function e (type, id) {
+export default function e (type, id, issue) {
   if(!window.Monitor)return
   if(!window.Monitor.callback) {
     console.log('没有合适的回调函数 报错模块无法工作')
@@ -22,18 +22,18 @@ export default function e (type, id) {
   }
 
   console.log('监考系统提醒：')
-  console.log(table[type])
+  console.log(table[id])
 
   window.Monitor.record.push({
     time: Date.now(),
-    name: table[id],
+    name: `${issue ? '违规物品:' + issue : table[id]}`,
     id: id,
     type: type
   })
   
   window.Monitor.callback(type, {
     time: Date.now(),
-    name: table[id],
+    name: `${issue ? '违规物品:' + issue : table[id]}`,
     id: id
   })
 }

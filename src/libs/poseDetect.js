@@ -11,14 +11,13 @@ async function init(imageElement) {
   video = imageElement
 }
 
-async function detect(v) {
-  let imageElement = v || video
-  if(!imageElement) {
+async function detect(v = video) {
+  if(!v) {
     new Error('没有合适的图像载体')
     return
   }
   const pose = await net.estimateSinglePose(
-    imageElement,
+    v,
     imageScaleFactor,
     flipHorizontal,
     outputStride
