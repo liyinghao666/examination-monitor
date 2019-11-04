@@ -3,7 +3,7 @@ const video = document.querySelector('#video')
 const video2 = document.querySelector('#face')
 if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
   navigator.mediaDevices.getUserMedia({
-    'audio':false,
+    'audio':true,
     'video':{'facingMode': "user"}
   }).then(async(mediaStream) => {
     if(video.mozSrcObject !== undefined){
@@ -13,7 +13,7 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
     }
     video.play()
 
-    const Monitor = new monitor(video, video2, (type, data) => {
+    const FMonitor = new monitor(video, video2, (type, data) => {
       switch (type) {
         case 0: console.log('检测到人脸')
         break
@@ -26,8 +26,10 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       console.log(data)
     })
     
-    
-    await Monitor.active((type) => {
+    await FMonitor.init((type) => {
+      console.log(`init ${type}`);
+    });
+    await FMonitor.active((type) => {
       switch(type){
         case 0: console.log('正在获取用户特征')
         break
@@ -46,12 +48,8 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       }
     })
     console.log('活体检测完成，开始考试')
-    
-    await Monitor.start()
-    
-    // setTimeout(async () => {
-    //   await Monitor.end()
-    // }, 1000*10)
+    FMonitor.end()
+        
   }).catch((e) => {
     console.log('error on calling camera')
     console.log(e)

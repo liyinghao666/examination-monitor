@@ -3,7 +3,7 @@ import e from '../helper/!.js'
 let model = null
 
 const detect = async (webcam) => {
-  let boxes = await yolo(webcam.capture(), model, {
+  let boxes = await yolo(webcam, model, {
     classProbThreshold: 0.5
   })
   let issue = new Set()                  // 违规物品名称表
@@ -19,7 +19,7 @@ const detect = async (webcam) => {
     }
   })
   if (muti === 0) {
-    let boxes = await yolo(webcam.capture(), model, {
+    let boxes = await yolo(webcam, model, {
       classProbThreshold: 0.2
     })
     boxes.forEach(box => {
@@ -28,8 +28,7 @@ const detect = async (webcam) => {
       }
     })
     if (muti === 0) {
-      Monitor.shakalaka.push(1)
-      Monitor.shakalaka.shift()   
+      e(1, 100)
     }
   } else if (muti === 1) {
     Monitor.shakalaka.push(0)
@@ -47,7 +46,8 @@ const detect = async (webcam) => {
 }
 
 const init = async () => {
-  model = await downloadModel('/models/model.json')
+  // model = await downloadModel('/models/model.json')
+  model = await downloadModel()
 }
 
 const issueDetector = {

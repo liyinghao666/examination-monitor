@@ -273,6 +273,16 @@
     "@types/webgl2" "0.0.4"
     seedrandom "2.4.3"
 
+"@tensorflow/tfjs-core@0.14.2":
+  version "0.14.2"
+  resolved "https://registry.npm.taobao.org/@tensorflow/tfjs-core/download/@tensorflow/tfjs-core-0.14.2.tgz#b1ee6af0d893782a1c3b2c988091c36c42f1d7a4"
+  integrity sha1-se5q8NiTeCocOyyYgJHDbELx16Q=
+  dependencies:
+    "@types/seedrandom" "2.4.27"
+    "@types/webgl-ext" "0.0.30"
+    "@types/webgl2" "0.0.4"
+    seedrandom "2.4.3"
+
 "@tensorflow/tfjs-core@1.2.2":
   version "1.2.2"
   resolved "https://registry.npm.taobao.org/@tensorflow/tfjs-core/download/@tensorflow/tfjs-core-1.2.2.tgz#2efa89e323612a26aeccee9b3ae9f5ac5a635bbe"
@@ -588,6 +598,14 @@ supports-color@^5.3.0:
   dependencies:
     has-flag "^3.0.0"
 
+tfjs-image-recognition-base@^0.3.0:
+  version "0.3.1"
+  resolved "https://registry.npm.taobao.org/tfjs-image-recognition-base/download/tfjs-image-recognition-base-0.3.1.tgz#f135d9297d2b4b6f427e1bc22e02d04647877e39"
+  integrity sha1-8TXZKX0rS29CfhvCLgLQRkeHfjk=
+  dependencies:
+    "@tensorflow/tfjs-core" "0.14.2"
+    tslib "^1.9.3"
+
 tfjs-image-recognition-base@^0.6.1:
   version "0.6.1"
   resolved "https://registry.npm.taobao.org/tfjs-image-recognition-base/download/tfjs-image-recognition-base-0.6.1.tgz#179c40b72ba198fbdcce9badbfc5239e892452f3"
@@ -595,6 +613,15 @@ tfjs-image-recognition-base@^0.6.1:
   dependencies:
     "@tensorflow/tfjs-core" "^1.2.2"
     tslib "^1.10.0"
+
+tfjs-tiny-yolov2@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.npm.taobao.org/tfjs-tiny-yolov2/download/tfjs-tiny-yolov2-0.4.0.tgz#9e4f269bca09e2dd09567e92c6fbbc0ed0ee400c"
+  integrity sha1-nk8mm8oJ4t0JVn6Sxvu8DtDuQAw=
+  dependencies:
+    "@tensorflow/tfjs-core" "0.14.2"
+    tfjs-image-recognition-base "^0.3.0"
+    tslib "^1.9.3"
 
 tfjs-yolo-tiny@^1.0.1:
   version "1.0.1"
@@ -611,7 +638,7 @@ trim-right@^1.0.1:
   resolved "https://registry.yarnpkg.com/trim-right/-/trim-right-1.0.1.tgz#cb2e1203067e0c8de1f614094b9fe45704ea6003"
   integrity sha1-yy4SAwZ+DI3h9hQJS5/kVwTqYAM=
 
-tslib@^1.10.0:
+tslib@^1.10.0, tslib@^1.9.3:
   version "1.10.0"
   resolved "https://registry.npm.taobao.org/tslib/download/tslib-1.10.0.tgz#c3c19f95973fb0a62973fb09d90d961ee43e5c8a"
   integrity sha1-w8GflZc/sKYpc/sJ2Q2WHuQ+XIo=

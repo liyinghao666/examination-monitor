@@ -6,6 +6,7 @@ const table = {
   104: '大幅度肢体动作',
   105: '换人',
   
+  
   200: '无人脸',
   201: '多人同屏',
   202: '眼神漂移',
@@ -24,6 +25,7 @@ export default function e (type, id, issue) {
   console.log('监考系统提醒：')
   console.log(table[id])
 
+  if(!window.Monitor.record)window.Monitor.record = []
   window.Monitor.record.push({
     time: Date.now(),
     name: `${issue ? '违规物品:' + issue : table[id]}`,

@@ -1,6 +1,6 @@
 import './helper/webgazer.js'
-const localstorageLabel = 'webgazerGlobalData';
-window.localStorage.setItem(localstorageLabel, null);
+const localstorageLabel = 'webgazerGlobalData'
+window.localStorage.setItem(localstorageLabel, null)
 webgazer.setRegression('ridge') /* currently must set regression and tracker */
   .setTracker('clmtrackr')
   
@@ -8,7 +8,7 @@ webgazer.detect = (() => {
   let x = undefined
   let y = undefined
   const width = window.innerWidth
-  const height = window.innerWidth
+  const height = window.innerHeight
   return (callback) => {
     if(webgazer.getCurrentPrediction()) {
       x = webgazer.getCurrentPrediction().x

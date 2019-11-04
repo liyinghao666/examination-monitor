@@ -1,24 +1,15 @@
 import * as faceapi from 'face-api.js'
 import e from '../helper/!.js'
-let nobody = false
 let fnet = null
 let video = null
-const miniumDis = 0.3
-
+const miniumDis = 0.2
 
 const seek = async function(v = video) {
   let face = await faceapi.detectSingleFace(v, fnet).withFaceLandmarks(true).withFaceDescriptor()
-  if (!face) {
-    Monitor.shakalaka.push(1)
-    Monitor.shakalaka.shift()
-  } else {
-    Monitor.shakalaka.push(0)
-    Monitor.shakalaka.shift()
-  }
-  if (face && nobody) {
+  if (face && window.nobody) {
     nobody = false
     console.log('人脸出现，开始进行身份认证')
-    if (!compare(Monitor.face, face)) {
+    if (!await compare(Monitor.face, face)) {
       console.log('中途换人且不是同一个人')
       e(1, 105)
     } else {
@@ -26,23 +17,31 @@ const seek = async function(v = video) {
     }
   }
 
-  // 无人在场预判
-  if (Monitor.shakalaka[0] === 1 && Monitor.shakalaka[1] === 1 && Monitor.shakalaka[2] === 1 && Monitor.shakalaka[3] === 1 && !nobody) {
-    nobody = true
-    e(1, 100)
-  }
   return face
 }
 
-const init = async (v) => {
-  video = v
-  await faceapi.loadTinyFaceDetectorModel('/models')
-  await faceapi.loadFaceLandmarkTinyModel('/models')
-  await faceapi.loadFaceRecognitionModel('/models')
+const init = async (v, cb) => {
+  video = v ? v : video
+  await faceapi.loadTinyFaceDetectorModel('https://exam.zhrccp.com/static/js_models')
+  if(cb && typeof(cb) === 'function') {
+    cb(1)
+  }
+  await faceapi.loadFaceLandmarkTinyModel('https://exam.zhrccp.com/static/js_models')
+  if(cb && typeof(cb) === 'function') {
+    cb(2)
+  }
+  await faceapi.loadFaceRecognitionModel('https://exam.zhrccp.com/static/js_models')
+  if(cb && typeof(cb) === 'function') {
+    cb(3)
+  }
   fnet = new faceapi.TinyFaceDetectorOptions({inputSize: 416, scoreThreshold: 0.2})
 }
 
-const compare = (pre, next) => {
+const compare = async (pre, next) => {
+  if (!pre) {
+    window.Monitor.face = await faceapi.detectSingleFace(video, fnet).withFaceLandmarks(true).withFaceDescriptor()
+    pre = window.Monitor.face
+  }
   if(pre && pre.descriptor) {
     pre = pre.descriptor
   }
@@ -59,6 +58,7 @@ const compare = (pre, next) => {
   }
   console.log('欧氏距离')
   console.log(odis)
+  console.log(odis < miniumDis)
   return odis < miniumDis
 }
 
@@ -75,6 +75,5 @@ if(window.Monitor) {
     faceSeeker
   }
 }
-
 
 export default faceSeeker
