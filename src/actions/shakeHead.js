@@ -5,9 +5,8 @@ let pose = null
 export default async function shakeHead(cb) {
   await new Promise(async (res) => {
     let tick = () => setTimeout(async () => {
-      console.log('a')
       pose = await poseDetect.detect()
-      if (pose && pose.score > 0.3) {
+      if (pose && pose.score > 0.2) {
         console.log(pose.score)
         res()
       } else {

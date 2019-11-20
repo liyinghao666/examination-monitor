@@ -2,10 +2,15 @@ import * as faceapi from 'face-api.js'
 import e from '../helper/!.js'
 let fnet = null
 let video = null
+let face = null
 const miniumDis = 0.2
 
 const seek = async function(v = video) {
-  let face = await faceapi.detectSingleFace(v, fnet).withFaceLandmarks(true).withFaceDescriptor()
+  try {
+    face = await faceapi.detectSingleFace(v, fnet).withFaceLandmarks(true)
+  } catch(e) {
+    console.log(e)
+  }
   if (face && window.nobody) {
     nobody = false
     console.log('人脸出现，开始进行身份认证')

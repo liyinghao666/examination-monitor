@@ -1,4 +1,4 @@
-import { Webcam } from './helper/webcam.js'
+// import { Webcam } from './helper/webcam.js'
 import e from './helper/!.js'
 
 
@@ -55,7 +55,7 @@ export default class monitor {
       this.video.srcObject = video.srcObject 
     }
     this.video.play().then(() => {
-      this.webcam = new Webcam(this.video)
+      // this.webcam = new Webcam(this.video)
     })
     this.callback = callback
     this.log = false
@@ -80,6 +80,9 @@ export default class monitor {
     window.nobody = false
     let loaded = false
     return async (cb) => {
+
+      if (!cb || typeof(cb) !== 'function') return
+
       if (loaded)return
 
 
@@ -179,10 +182,8 @@ export default class monitor {
 
 window.monitor = monitor
 window.Monitor.init = async () => {
-
   await faceSeeker.init()
   console.log('人脸识别模型加载完毕')
   await poseDetect.init()
   console.log('姿态识别模型加载完毕')
-
 }

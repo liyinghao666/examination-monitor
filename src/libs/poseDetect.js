@@ -24,7 +24,6 @@ async function multiDetect(v = video) {
   let multi = 0
   let scores = []
   let top = 0
-  console.log('before multi detect')
   const poses = await net.estimateMultiplePoses(
     v,
     imageScaleFactor,
@@ -33,8 +32,9 @@ async function multiDetect(v = video) {
     2
   )
   poses.forEach((pose) => {
+    console.log(pose.score)
     top > pose.score ? null : top = pose.score
-    if (pose.score > 0.25) {
+    if (pose.score > 0.20) {
       multi += 1
       scores.push(pose.score)
     } 
@@ -60,7 +60,6 @@ async function detect(v = video) {
     new Error('没有合适的图像载体')
     return
   }
-  console.log('before single detect')
   const pose = await net.estimateSinglePose(
     v,
     imageScaleFactor,

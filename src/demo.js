@@ -12,7 +12,6 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       video.srcObject = mediaStream;                
     }
     video.play()
-
     const FMonitor = new monitor(video, video2, (type, data) => {
       switch (type) {
         case 0: console.log('检测到人脸')
@@ -25,7 +24,6 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       }
       console.log(data)
     })
-    
     await FMonitor.init((type) => {
       console.log(`init ${type}`);
     });
@@ -47,9 +45,8 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         break
       }
     })
+    await FMonitor.start()
     console.log('活体检测完成，开始考试')
-    FMonitor.end()
-        
   }).catch((e) => {
     console.log('error on calling camera')
     console.log(e)

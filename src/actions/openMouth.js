@@ -6,6 +6,7 @@ export default async function openMouth (cb) {
   await new Promise((res) => {
     let tick = () => setTimeout (async () => {
       face = await faceSeeker.seek()
+      // console.log('tick tick boom')
       console.log(face)
       if (face) {
         res()

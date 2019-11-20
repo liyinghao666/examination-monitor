@@ -980,10 +980,13 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
               });
 
             case 7:
-              console.log('活体检测完成，开始考试');
-              FMonitor.end();
+              _context.next = 9;
+              return FMonitor.start();
 
             case 9:
+              console.log('活体检测完成，开始考试');
+
+            case 10:
             case "end":
               return _context.stop();
           }
@@ -1027,7 +1030,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53772" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55258" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
