@@ -27,15 +27,15 @@ const seek = async function(v = video) {
 
 const init = async (v, cb) => {
   video = v ? v : video
-  await faceapi.loadTinyFaceDetectorModel('https://exam.zhrccp.com/static/js_models')
+  await faceapi.loadTinyFaceDetectorModel('https://exam-monitor.oss-cn-hangzhou.aliyuncs.com/js_models')
   if(cb && typeof(cb) === 'function') {
     cb(1)
   }
-  await faceapi.loadFaceLandmarkTinyModel('https://exam.zhrccp.com/static/js_models')
+  await faceapi.loadFaceLandmarkTinyModel('https://exam-monitor.oss-cn-hangzhou.aliyuncs.com/js_models')
   if(cb && typeof(cb) === 'function') {
     cb(2)
   }
-  await faceapi.loadFaceRecognitionModel('https://exam.zhrccp.com/static/js_models')
+  await faceapi.loadFaceRecognitionModel('https://exam-monitor.oss-cn-hangzhou.aliyuncs.com/js_models')
   if(cb && typeof(cb) === 'function') {
     cb(3)
   }

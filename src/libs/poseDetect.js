@@ -32,9 +32,8 @@ async function multiDetect(v = video) {
     2
   )
   poses.forEach((pose) => {
-    console.log(pose.score)
     top > pose.score ? null : top = pose.score
-    if (pose.score > 0.20) {
+    if (pose.score > 0.25) {
       multi += 1
       scores.push(pose.score)
     } 
@@ -45,7 +44,7 @@ async function multiDetect(v = video) {
   } else if (multi >= 2) {
     let ensure = 0
     scores.forEach(item => {
-      if (item >= top - 0.2) {
+      if (item >= top - 0.1) {
         ensure += 1
       }
     })
