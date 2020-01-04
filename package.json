@@ -23,6 +23,7 @@
   },
   "scripts": {
     "dev": "parcel index.html",
-    "build": "parcel build index.html"
+    "build": "parcel build index.html",
+    "format": "prettier --write src/**/*.js"
   }
 }

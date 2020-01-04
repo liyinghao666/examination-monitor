@@ -26,7 +26,7 @@
  * Just run `diff` tbh, yuno MIT license.
  */
 
-import * as tf from '@tensorflow/tfjs';
+import * as tf from "@tensorflow/tfjs";
 
 /**
  * A class that wraps webcam video elements to capture Tensor4Ds.
@@ -68,9 +68,9 @@ export class Webcam {
   cropImage(img) {
     const size = Math.min(img.shape[0], img.shape[1]);
     const centerHeight = img.shape[0] / 2;
-    const beginHeight = centerHeight - (size / 2);
+    const beginHeight = centerHeight - size / 2;
     const centerWidth = img.shape[1] / 2;
-    const beginWidth = centerWidth - (size / 2);
+    const beginWidth = centerWidth - size / 2;
     return img.slice([beginHeight, beginWidth, 0], [size, size, 3]);
   }
 
@@ -92,8 +92,8 @@ export class Webcam {
   async setup() {
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       const stream = await navigator.mediaDevices.getUserMedia({
-        'audio': false,
-        'video': {facingMode: 'environment'}
+        audio: false,
+        video: { facingMode: "environment" }
       });
       window.stream = stream;
       this.webcamElement.srcObject = stream;
@@ -101,12 +101,13 @@ export class Webcam {
         this.webcamElement.onloadedmetadata = () => {
           this.adjustVideoSize(
             this.webcamElement.videoWidth,
-            this.webcamElement.videoHeight);
+            this.webcamElement.videoHeight
+          );
           resolve();
         };
       });
     } else {
-      throw new Error('No webcam found!');
+      throw new Error("No webcam found!");
     }
   }
 }
