@@ -197,7 +197,7 @@ feedback = [
 
 
 
-##  文件夹中demo_.js是可供参考的示范  demo.js monitor.js 是已经打包过的代码 可以用http-server测试效果 models是模型文件 需要放在服务器根目录
+##  文件夹中demo.js是可供参考的示范  demo.js monitor.js 是已经打包过的代码 可以用http-server测试效果 models是模型文件 需要放在服务器根目录
 
 ##  异步的API设计
 
