@@ -1,4 +1,5 @@
 import "./helper/webgazer.js";
+
 const localstorageLabel = "webgazerGlobalData";
 window.localStorage.setItem(localstorageLabel, null);
 webgazer
@@ -28,4 +29,5 @@ webgazer.detect = (() => {
     }
   };
 })();
+
 export default webgazer;

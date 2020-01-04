@@ -1,5 +1,6 @@
 import * as faceapi from "face-api.js";
-import e from "../helper/!.js";
+import e from "../helper/warning.js";
+
 let fnet = null;
 let video = null;
 let face = null;

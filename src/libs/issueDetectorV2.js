@@ -1,5 +1,6 @@
 import * as yolo from "tfjs-tiny-yolov2";
-import e from "../helper/!.js";
+import e from "../helper/warning.js";
+
 let net = null;
 const forwardParams = {
   inputSize: 416,

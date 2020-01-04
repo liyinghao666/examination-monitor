@@ -1,5 +1,6 @@
 import yolo, { downloadModel } from "tfjs-yolo-tiny";
-import e from "../helper/!.js";
+import e from "../helper/warning.js";
+
 let model = null;
 
 const detect = async webcam => {

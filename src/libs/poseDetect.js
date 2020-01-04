@@ -1,5 +1,6 @@
 import * as posenet from "@tensorflow-models/posenet";
-import e from "../helper/!.js";
+import e from "../helper/warning.js";
+
 const imageScaleFactor = 0.5;
 const outputStride = 16;
 const flipHorizontal = false;

@@ -1,7 +1,17 @@
-// import monitor from './index'
 const video = document.querySelector("#video");
 const video2 = document.querySelector("#face");
-if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+const message = document.querySelector("#message");
+
+const log = console.log;
+const logs = [];
+console.log = (...params) => {
+  log(...params);
+  logs.push(params.join(" "));
+  message.innerText = logs.join("\n");
+  message.scrollTop = message.scrollHeight;
+};
+
+if (navigator?.mediaDevices?.getUserMedia) {
   navigator.mediaDevices
     .getUserMedia({
       audio: true,
@@ -18,15 +28,20 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         switch (type) {
           case 0:
             console.log("检测到人脸");
+            if (data.success) {
+              console.log("识别成功，监考系统将在后台持续监控！");
+            } else {
+              console.log("识别失败，请检查摄像头位置是否正常");
+            }
             break;
           case 1:
-            console.log("疑似违规");
+            console.log("疑似违规", data.name);
             break;
           case 2:
-            console.log("违规实锤");
+            console.log("违规实锤", data.name);
+            console.log("监考系统检测到您", data.name, " 请注意！");
             break;
         }
-        console.log(data);
       });
       await FMonitor.init(type => {
         console.log(`init ${type}`);

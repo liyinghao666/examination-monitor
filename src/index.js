@@ -1,33 +1,11 @@
 // import { Webcam } from './helper/webcam.js'
-import e from "./helper/!.js";
-
+import e from "./helper/warning.js";
 // 人体姿态识别
-import "./libs/poseDetect.js";
-let poseDetect = null;
-if (window.Monitor && window.Monitor.poseDetect) {
-  poseDetect = window.Monitor.poseDetect;
-} else {
-  new Error("没有找到poseDetect模块");
-}
-
+import poseDetect from "./libs/poseDetect.js";
 // 人脸搜索
-import "./libs/faceSeeker.js";
-let faceSeeker = null;
-if (window.Monitor && window.Monitor.faceSeeker) {
-  faceSeeker = window.Monitor.faceSeeker;
-} else {
-  new Error("没有找到faceSeeker模块");
-}
-
+import faceSeeker from "./libs/faceSeeker.js";
 // yolo算法
-// import './libs/issueDetectorV2.js'
-// let issueDetector = null
-// if (window.Monitor && window.Monitor.issueDetector){
-//   issueDetector = window.Monitor.issueDetector
-// } else {
-//   new Error('没有找到issueDector模块')
-// }
-
+// import issueDetector from "./libs/issueDetectorV2.js";
 // 活体检测-张嘴
 import openMouth from "./actions/openMouth.js";
 // 活体检测-摇头
@@ -177,9 +155,3 @@ export default class monitor {
 }
 
 window.monitor = monitor;
-window.Monitor.init = async () => {
-  await faceSeeker.init();
-  console.log("人脸识别模型加载完毕");
-  await poseDetect.init();
-  console.log("姿态识别模型加载完毕");
-};
