@@ -1,27 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-  <style>
-    #video {
-      width: 50%;
-      height: 50%;
-      left: 25%;
-      top: 25%;
-      position: absolute;
-      border: 5px solid black;
-      box-shadow: 0 0 10px 10px black;
-    }
-  </style>
-</head>
-<body>
-  <video id="video" muted></video>
-  <video id='face' src='' height="416" width="416" muted> 
-  </video>
-  <script src="./src/index.js"></script>
-  <script src="./src/demo.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>监考系统</title>
+    <style>
+      #video {
+        position: absolute;
+        top: 15%;
+        left: 25%;
+        width: 50%;
+        height: 50%;
+      }
+
+      #face {
+        visibility: hidden;
+      }
+
+      #message {
+        position: absolute;
+        bottom: 30px;
+        width: 100%;
+        height: 150px;
+        overflow: auto;
+        line-height: 30px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <video id="video" muted></video>
+    <video id="face" height="416" width="416" muted></video>
+    <p id="message"></p>
+    <script src="./src/index.js"></script>
+    <script src="./src/demo.js"></script>
+  </body>
 </html>
